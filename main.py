@@ -3,7 +3,17 @@ from tkinter import *
 import os
 import tkinter.filedialog
 from PIL import Image, ImageTk
+from tkinter import ttk
 
+
+global mangaDirectoryPath
+mangaDirectoryPath = ''
+
+global mangaName
+mangaName = ''
+
+boldFont = 'Helvetica 9 bold'
+regularFont = 'Helvetica 9'
 
 def centerScreen(w, h):
 
@@ -20,29 +30,54 @@ def eraseRoot():
         widget.destroy()
 
 def selectFolder():
-    global mangaDirectory
-    mangaDirectory = tkinter.filedialog.askdirectory()
-    print(mangaDirectory)
+    global mangaDirectoryPath
+    mangaDirectoryPath = tkinter.filedialog.askdirectory()
+    mangaLocationLabel.config(text=mangaDirectoryPath)
+
+    global mangaName
+    mangaName = (os.path.basename(mangaDirectoryPath))
+    mangaNameRegular.config(text=mangaName)
+
+    global repackButton
+    repackButton.config(state=ACTIVE)
+
 
 def main():
 
     eraseRoot()
 
-    directoryFrame = LabelFrame(root, height=75, width=400)
+    global mangaDirectoryPath
+
+    directoryFrame = LabelFrame(root, height=120, width=600)
     directoryFrame.place(x=50, y=50)
 
-    selectDirectoryLabel = Label(directoryFrame, text='Browse for folder:')
+    selectDirectoryLabel = Label(directoryFrame, text='Browse for folder:', font = boldFont)
     selectDirectoryLabel.place(x=5, y=5)
 
     selectDirectoryButton = Button(directoryFrame, image=selectDirectoryIcon, command=selectFolder)
-    selectDirectoryButton.place(x=110, y=3)
+    selectDirectoryButton.place(x=125, y=4)
 
+    mangaDirectoryLabel = Label(directoryFrame, text='Manga directory location: ', font = boldFont)
+    mangaDirectoryLabel.place(x=5, y=30)
 
+    global mangaLocationLabel
+    mangaLocationLabel = Label(directoryFrame, text = '', font=regularFont)
+    mangaLocationLabel.place(x=155, y=30)
 
+    mangaNameLabel = Label(directoryFrame, text='Manga name: ', font=boldFont)
+    mangaNameLabel.place(x=5, y=55)
+
+    global mangaNameRegular
+    mangaNameRegular = Label(directoryFrame, text=mangaName, font=regularFont)
+    mangaNameRegular.place(x=90, y=55)
+
+    global repackButton
+    repackButton = ttk.Button(directoryFrame, text='Repack', width=95, state=DISABLED)
+    repackButton.place(x=5, y=80)
 
 
 root = Tk()
-root.geometry(centerScreen(500, 500))
+root.geometry(centerScreen(700, 500))
 root.title('Manga Repacker')
 
 
