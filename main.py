@@ -5,6 +5,7 @@ import tkinter.filedialog
 from PIL import Image, ImageTk
 from tkinter import ttk
 import shutil
+import time
 
 global bufferPath
 bufferPath = 'images/buffer.jpg'
@@ -49,6 +50,9 @@ def selectFolder():
 
 
 def repack():
+
+    startTime = time.time()
+
     global mangaChaptersPath
 
     mangaChaptersPath = mangaDirectoryPath + "/"
@@ -77,6 +81,9 @@ def repack():
 
     chapterRename.config(text='Chapter rename ✓', font=boldFont)
 
+    chapterRenameTime = (time.time() - startTime)
+
+    startTime = time.time()
 
     listOfDir = []
     for file in os.listdir(mangaChaptersPath):
@@ -124,6 +131,7 @@ def repack():
 
     check10.config(text='Chapters with less than 10 pages ✓', font=boldFont)
     
+    check10Time = (time.time() - startTime)
 
 
 
