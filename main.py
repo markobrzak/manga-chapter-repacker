@@ -11,14 +11,14 @@ import numpy
 global bufferPath
 bufferPath = 'images/buffer.jpg'
 
-global mangaDirectoryPath
-mangaDirectoryPath = ''
+global  DirectoryPath
+DirectoryPath = ''
 
-global mangaChaptersPath
-mangaChaptersPath = ''
+global  ChaptersPath
+ChaptersPath = ''
 
-global mangaName
-mangaName = ''
+global  Name
+Name = ''
 
 boldFont = 'Helvetica 9 bold'
 regularFont = 'Helvetica 9'
@@ -38,13 +38,13 @@ def eraseRoot():
         widget.destroy()
 
 def selectFolder():
-    global mangaDirectoryPath
-    mangaDirectoryPath = tkinter.filedialog.askdirectory()
-    mangaLocationLabel.config(text=mangaDirectoryPath)
+    global  DirectoryPath
+    DirectoryPath = tkinter.filedialog.askdirectory()
+    LocationLabel.config(text= DirectoryPath)
 
-    global mangaName
-    mangaName = (os.path.basename(mangaDirectoryPath))
-    mangaNameRegular.config(text=mangaName)
+    global  Name
+    Name = (os.path.basename( DirectoryPath))
+    NameRegular.config(text= Name)
 
     global repackButton
     repackButton.config(state=ACTIVE)
@@ -59,15 +59,15 @@ def repack():
     global repackButton
     repackButton.config(state=DISABLED)
 
-    global mangaChaptersPath
+    global  ChaptersPath
 
-    mangaChaptersPath = mangaDirectoryPath + "/"
-    print(mangaChaptersPath)
+    ChaptersPath =  DirectoryPath + "/"
+    print( ChaptersPath)
 
     # Put all full directory paths into a list
     listOfDir = []
-    for file in os.listdir(mangaChaptersPath):
-        d = os.path.join(mangaChaptersPath, file)
+    for file in os.listdir( ChaptersPath):
+        d = os.path.join( ChaptersPath, file)
         if os.path.isdir(d):
             listOfDir.append(d)
 
@@ -75,7 +75,7 @@ def repack():
     listOfDir.sort(key = lambda x: float(x.rsplit(' ', 1)[1]))
 
     # Put all directory names from current directory into a list
-    allD = os.listdir(mangaChaptersPath)
+    allD = os.listdir( ChaptersPath)
 
     # Get number of chapters
     # -4 because of 4 python files needed in current directory
@@ -83,7 +83,7 @@ def repack():
 
     # Rename directories to the wanted form
     for k in range(numberOfChapters-1, -1, -1):
-        os.rename(listOfDir[k], mangaDirectoryPath + "/Chapter " + str(k+1))
+        os.rename(listOfDir[k],  DirectoryPath + "/Chapter " + str(k+1))
 
     chapterRename.config(text='Renaming chapters ✓', font=boldFont)
 
@@ -97,8 +97,8 @@ def repack():
     startTime = time.time()
 
     listOfDir = []
-    for file in os.listdir(mangaChaptersPath):
-        d = os.path.join(mangaChaptersPath, file)
+    for file in os.listdir( ChaptersPath):
+        d = os.path.join( ChaptersPath, file)
         if os.path.isdir(d):
             listOfDir.append(d)
 
@@ -152,12 +152,12 @@ def repack():
 
     startTime = time.time()
 
-    numberOfChapters = len(next(os.walk(mangaChaptersPath))[1])
+    numberOfChapters = len(next(os.walk( ChaptersPath))[1])
         
     # Makes folder for all files to be put into
-    os.mkdir(mangaChaptersPath + mangaName + " - All Chapters")
+    os.mkdir( ChaptersPath +  Name + " - All Chapters")
 
-    dirPath = mangaChaptersPath + mangaName + " - All Chapters/"
+    dirPath =  ChaptersPath +  Name + " - All Chapters/"
 
 
     i = 0
@@ -169,7 +169,7 @@ def repack():
         addZero = ""
         numberforRename = 10
 
-        chapter = mangaChaptersPath + "Chapter " + str(chapterNum) + "/"
+        chapter =  ChaptersPath + "Chapter " + str(chapterNum) + "/"
 
         # folder path
         dir_path = chapter
@@ -229,7 +229,7 @@ def repack():
     startTime = time.time()
 
 
-    all_chapters = mangaChaptersPath + mangaName + " - All Chapters/"
+    all_chapters =  ChaptersPath +  Name + " - All Chapters/"
 
     number_of_files = len(os.listdir(all_chapters))
 
@@ -243,29 +243,29 @@ def repack():
 
         if(number_of_files - 1000 <= 0):
             end = end + number_of_files
-            os.mkdir(mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end))
-            print("Folder created: ", mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end))
+            os.mkdir( ChaptersPath +  Name + " " + str(start) + "-" + str(end))
+            print("Folder created: ",  ChaptersPath +  Name + " " + str(start) + "-" + str(end))
             for k in range(start, end+1):
                 if(os.path.isfile(all_chapters + str(k) + ".jpg")):
-                    os.rename(all_chapters + str(k) + ".jpg", mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".jpg")
+                    os.rename(all_chapters + str(k) + ".jpg",  ChaptersPath +  Name + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".jpg")
                 elif(os.path.isfile(all_chapters + str(k) + ".png")):
-                    os.rename(all_chapters + str(k) + ".png", mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".png")
+                    os.rename(all_chapters + str(k) + ".png",  ChaptersPath +  Name + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".png")
                 elif(os.path.isfile(all_chapters + str(k) + ".webp")):
-                    os.rename(all_chapters + str(k) + ".webp", mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".webp")
+                    os.rename(all_chapters + str(k) + ".webp",  ChaptersPath +  Name + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".webp")
 
             break
 
         end = end + 1000
 
-        os.mkdir(mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end))
+        os.mkdir( ChaptersPath +  Name + " " + str(start) + "-" + str(end))
 
         for k in range(start, end+1):
             if(os.path.isfile(all_chapters + str(k) + ".jpg")):
-                os.rename(all_chapters + str(k) + ".jpg", mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".jpg")
+                os.rename(all_chapters + str(k) + ".jpg",  ChaptersPath +  Name + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".jpg")
             if(os.path.isfile(all_chapters + str(k) + ".png")):
-                os.rename(all_chapters + str(k) + ".png", mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".png")
+                os.rename(all_chapters + str(k) + ".png",  ChaptersPath +  Name + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".png")
             if(os.path.isfile(all_chapters + str(k) + ".webp")):
-                os.rename(all_chapters + str(k) + ".webp", mangaChaptersPath + mangaName + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".webp")
+                os.rename(all_chapters + str(k) + ".webp",  ChaptersPath +  Name + " " + str(start) + "-" + str(end) + "\\" + str(k) + ".webp")
 
 
         number_of_files = number_of_files - 1000
@@ -285,7 +285,7 @@ def main():
 
     eraseRoot()
 
-    global mangaDirectoryPath
+    global  DirectoryPath
 
     directoryFrame = LabelFrame(root, height=120, width=600)
     directoryFrame.place(x=50, y=50)
@@ -299,16 +299,16 @@ def main():
     directoryLocationLabel = Label(directoryFrame, text='Directory location: ', font = boldFont)
     directoryLocationLabel.place(x=5, y=30)
 
-    global mangaLocationLabel
-    mangaLocationLabel = Label(directoryFrame, text = '', font=regularFont)
-    mangaLocationLabel.place(x=115, y=30)
+    global  LocationLabel
+    LocationLabel = Label(directoryFrame, text = '', font=regularFont)
+    LocationLabel.place(x=115, y=30)
 
-    mangaNameLabel = Label(directoryFrame, text='Manga name: ', font=boldFont)
-    mangaNameLabel.place(x=5, y=55)
+    NameLabel = Label(directoryFrame, text='Name: ', font=boldFont)
+    NameLabel.place(x=5, y=55)
 
-    global mangaNameRegular
-    mangaNameRegular = Label(directoryFrame, text='', font=regularFont)
-    mangaNameRegular.place(x=90, y=55)
+    global  NameRegular
+    NameRegular = Label(directoryFrame, text='', font=regularFont)
+    NameRegular.place(x=50, y=55)
 
     global repackButton
     repackButton = ttk.Button(directoryFrame, text='Repack', width=95, state=DISABLED, command=repack)
@@ -351,7 +351,7 @@ def main():
 
 root = Tk()
 root.geometry(centerScreen(700, 525))
-root.title('Manga Repacker')
+root.title('Repacker')
 
 
 selectDirectoryIcon=Image.open('images/icon.png')
