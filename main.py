@@ -79,9 +79,14 @@ def repack():
     for k in range(numberOfChapters-1, -1, -1):
         os.rename(listOfDir[k], mangaDirectoryPath + "/Chapter " + str(k+1))
 
-    chapterRename.config(text='Chapter rename ✓', font=boldFont)
+    chapterRename.config(text='Renaming chapters ✓', font=boldFont)
 
     chapterRenameTime = (time.time() - startTime)
+
+    chapterRenameTime = str(round(chapterRenameTime, 2)) + 's'
+
+    chapterRTime.config(text=chapterRenameTime)
+
 
     startTime = time.time()
 
@@ -129,9 +134,13 @@ def repack():
     else:
         print(len(badDir), " chapters fixed.")
 
-    check10.config(text='Chapters with less than 10 pages ✓', font=boldFont)
+    check10.config(text='Fixing chapters with less than 10 pages ✓', font=boldFont)
     
-    check10Time = (time.time() - startTime)
+    check10T = (time.time() - startTime)
+
+    check10T = str(round(check10T, 2)) + 's'
+
+    check10Time.config(text=check10T)
 
 
 
@@ -166,29 +175,37 @@ def main():
 
     global repackButton
     repackButton = ttk.Button(directoryFrame, text='Repack', width=95, state=DISABLED, command=repack)
-    repackButton.place(x=5, y=80)
+    repackButton.place(x=7.5, y=80)
 
     stagesFrame = LabelFrame(root, height=300, width=600)
     stagesFrame.place(x=50, y=180)
 
     global chapterRename
-    chapterRename = Label(stagesFrame, text='Chapter rename ...', font=boldFont)
+    chapterRename = Label(stagesFrame, text='Renaming chapters ...', font=boldFont)
     chapterRename.place(x=5, y=5)
 
+    global chapterRTime
+    chapterRTime = Label(stagesFrame, text='', font=boldFont, justify=LEFT)
+    chapterRTime.place(x=550, y=5)
+
     global check10
-    check10 = Label(stagesFrame, text='Chapters with less than 10 pages ...', font=boldFont)
+    check10 = Label(stagesFrame, text='Fixing chapters with less than 10 pages ...', font=boldFont)
     check10.place(x=5, y=25)
 
+    global check10Time
+    check10Time = Label(stagesFrame, text='', font=boldFont, justify=LEFT)
+    check10Time.place(x=550, y=25)
+
     global renamePages
-    renamePages = Label(stagesFrame, text='Page rename ...', font=boldFont)
+    renamePages = Label(stagesFrame, text='Renaming pages ...', font=boldFont)
     renamePages.place(x=5, y=45)
 
     global distributePages
-    distributePages = Label(stagesFrame, text='Distribute pages ...', font=boldFont)
+    distributePages = Label(stagesFrame, text='Distributing pages ...', font=boldFont)
     distributePages.place(x=5, y=65)
 
 root = Tk()
-root.geometry(centerScreen(700, 500))
+root.geometry(centerScreen(700, 525))
 root.title('Manga Repacker')
 
 
